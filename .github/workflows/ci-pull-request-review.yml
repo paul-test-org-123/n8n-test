@@ -17,12 +17,12 @@ jobs:
     if: >-
       github.event.review.state == 'approved' &&
       github.repository == 'n8n-io/n8n'
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       design_system: ${{ fromJSON(steps.ci-filter.outputs.results)['design-system'] == true }}
       commit_sha: ${{ steps.commit-sha.outputs.sha }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
@@ -61,9 +61,9 @@ jobs:
     name: Required Review Checks
     needs: [filter]
     if: always()
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           sparse-checkout: .github/actions/ci-filter
           sparse-checkout-cone-mode: false

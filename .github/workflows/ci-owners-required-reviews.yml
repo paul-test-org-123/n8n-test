@@ -84,7 +84,7 @@ jobs:
   pass-in-merge-queue:
     name: Pass in merge queue
     if: github.event_name == 'merge_group'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 5
     permissions:
       statuses: write
@@ -130,7 +130,7 @@ jobs:
       (github.event_name != 'workflow_run' ||
        (github.event.workflow_run.event == 'pull_request_review' &&
         github.event.workflow_run.head_repository.full_name != github.repository))
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 5
     # Job-level, not workflow-level: a run whose job is skipped must not
     # cancel an in-flight evaluation, or the status stays pending. Keyed by
@@ -179,7 +179,7 @@ jobs:
       # the OWNERS file, the scripts and the exemption routes must be trusted
       # input, and any writable branch can be a base. The script reads only
       # `.github/` and the root files, which cone mode always includes.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           ref: master
           persist-credentials: false

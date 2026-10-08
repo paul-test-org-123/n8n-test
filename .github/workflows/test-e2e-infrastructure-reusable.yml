@@ -58,7 +58,7 @@ jobs:
     runs-on: blacksmith-2vcpu-ubuntu-2204
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
 
       - name: Setup Node.js
         uses: ./.github/actions/setup-nodejs
@@ -95,13 +95,13 @@ jobs:
   # stays red for weeks with nobody told.
   notify-on-failure:
     name: Notify Cats on failure
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: [prepare-docker, benchmark, sizing-matrix]
     if: ${{ always() && github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
           sparse-checkout: .github/scripts/slack

@@ -53,11 +53,11 @@ concurrency:
 jobs:
   gate:
     name: 'Check for relevant changes'
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       build: ${{ steps.gate.outputs.build }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           # HEAD is the PR merge commit, so HEAD^1 is the base tip.
           fetch-depth: 2
@@ -93,7 +93,7 @@ jobs:
     needs: gate
     if: ${{ !github.event.pull_request.head.repo.fork && needs.gate.outputs.build == 'true' }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
 
       - name: Login to DHI Registry (for base image)
         uses: ./.github/actions/docker-registry-login
@@ -130,11 +130,11 @@ jobs:
 
   notify-on-failure:
     name: Notify on nightly smoke test failure
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: [docker-smoke-test]
     if: needs.docker-smoke-test.result == 'failure' && github.event_name == 'schedule'
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           sparse-checkout: .github/scripts/slack
           sparse-checkout-cone-mode: false

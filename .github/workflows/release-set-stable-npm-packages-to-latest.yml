@@ -11,12 +11,12 @@ jobs:
     permissions:
       contents: write
     name: Promote current stable releases as latest
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     environment: release
 
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           ref: refs/tags/stable
           fetch-depth: 1

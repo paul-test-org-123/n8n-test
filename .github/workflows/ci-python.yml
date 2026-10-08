@@ -12,13 +12,13 @@ on:
 jobs:
   checks:
     name: Checks
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: packages/@n8n/task-runner-python
     steps:
       - name: Check out project
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
 
       - name: Install uv
         uses: astral-sh/setup-uv@6ee6290f1cbc4156c0bdd66691b2c144ef8df19a # v7.4.0

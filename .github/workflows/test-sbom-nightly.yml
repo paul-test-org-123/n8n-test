@@ -17,7 +17,7 @@ jobs:
   resolve-nightly-build:
     name: Resolve nightly Docker build
     if: github.repository == 'n8n-io/n8n'
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 130
     permissions:
       actions: read
@@ -27,7 +27,7 @@ jobs:
       source_sha: ${{ steps.source.outputs.source_sha }}
     steps:
       - name: Checkout workflow source
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           fetch-depth: 1
           persist-credentials: false
@@ -123,11 +123,11 @@ jobs:
       always() &&
       github.event_name == 'schedule' &&
       (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           sparse-checkout: .github/scripts/slack
           sparse-checkout-cone-mode: false

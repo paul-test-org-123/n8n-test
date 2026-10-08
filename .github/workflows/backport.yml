@@ -27,7 +27,7 @@ jobs:
     # ubuntu-slim still ships git 2.54.0, whose shallow-fetch regression makes
     # the backport action's `git fetch --depth=1` die on a target branch that
     # exists. ubuntu-latest is on 2.55.0, which has the fix.
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       created_pull_numbers: ${{ steps.backport.outputs.created_pull_numbers }}
     steps:
@@ -38,7 +38,7 @@ jobs:
           app-id: ${{ secrets.N8N_ASSISTANT_APP_ID }}
           private-key: ${{ secrets.N8N_ASSISTANT_PRIVATE_KEY }}
 
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           token: ${{ steps.generate-token.outputs.token }}
 
@@ -97,7 +97,7 @@ jobs:
       pull-requests: write
     needs: [backport]
     if: needs.backport.outputs.created_pull_numbers != ''
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     outputs:
       pr_numbers_json: ${{ steps.filter.outputs.pr_numbers_json }}
     steps:
