@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   notify:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     # MERGE/ALREADY_MERGED are successful exits, MANUAL is the author's own doing
     if: ${{ !contains(fromJSON('["MERGE", "ALREADY_MERGED", "MANUAL"]'), github.event.reason) }}
     steps:

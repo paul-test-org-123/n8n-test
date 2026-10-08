@@ -29,9 +29,9 @@ concurrency:
 jobs:
   lint:
     name: 'Lint (shellcheck + POSIX)'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
       - name: shellcheck
@@ -41,10 +41,10 @@ jobs:
 
   e2e:
     name: 'Install, boot, upgrade'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
       - name: Run test harness
@@ -55,7 +55,7 @@ jobs:
   # arg parsing, file generation, secrets, idempotency, compose validation.
   fast-checks-windows:
     name: 'Fast checks (Windows / Git Bash)'
-    runs-on: windows-latest
+    runs-on: blacksmith-4vcpu-windows-2025
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -81,11 +81,11 @@ jobs:
 
   notify-on-failure:
     name: Notify Slack on failure
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: [lint, e2e, fast-checks-windows]
     if: ${{ always() && github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
           sparse-checkout: .github/scripts/slack

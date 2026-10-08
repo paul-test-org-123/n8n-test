@@ -15,7 +15,7 @@ jobs:
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'schedule' && github.repository == 'n8n-io/n8n')
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 10
     # Every write goes through the scoped app token below, so the job's own
     # GITHUB_TOKEN only needs to read for checkout.
@@ -34,7 +34,7 @@ jobs:
           permission-pull-requests: write
 
       - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           # create-pull-request unsets any persisted credential and configures
           # its own from `token`, so nothing here needs to survive the checkout.

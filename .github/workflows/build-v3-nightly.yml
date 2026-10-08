@@ -29,7 +29,7 @@ jobs:
   prepare:
     name: Compute date tag
     if: github.repository == 'n8n-io/n8n'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions: {}
     outputs:
       date_tag: ${{ steps.date.outputs.date }}
@@ -70,7 +70,7 @@ jobs:
     name: Tag release candidate
     needs: [prepare, build]
     if: ${{ needs.prepare.outputs.day_of_week == '1' || inputs.force_rc }}
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
       packages: write
@@ -80,7 +80,7 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
 

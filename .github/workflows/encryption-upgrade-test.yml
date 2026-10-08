@@ -49,7 +49,7 @@ jobs:
     # The mirror repository must not run this suite: its runners run out of
     # disk during the image build, and the cron would fire twice.
     if: github.repository == 'n8n-io/n8n'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -64,7 +64,7 @@ jobs:
       # Not a hidden dir: upload-artifact skips hidden paths by default.
       WORK_ROOT: ${{ github.workspace }}/upgrade-test-work
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
 
@@ -136,11 +136,11 @@ jobs:
   # because a step-level `if: failure()` never fires on a needs-failure.
   notify-on-failure:
     name: Notify on scheduled failure
-    runs-on: ubuntu-slim
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     needs: [encryption-cycle]
     if: ${{ always() && github.event_name == 'schedule' && contains(needs.*.result, 'failure') }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           persist-credentials: false
           sparse-checkout: .github/scripts/slack

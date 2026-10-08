@@ -21,10 +21,10 @@ permissions:
 jobs:
   security_scan:
     name: Security - Scan Docker Image With Trivy
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Checkout for VEX file
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: useblacksmith/checkout@v1 # v7.0.1
         with:
           sparse-checkout: |
             security/vex.openvex.json
